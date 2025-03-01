@@ -97,6 +97,8 @@
   home.packages = with pkgs; [
     appimage-run
     brave
+    seahorse
     sushi
+    telegram-desktop
   ];
 }
