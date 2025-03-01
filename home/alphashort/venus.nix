@@ -46,6 +46,7 @@ in {
       };
       features = {
         cli = {
+          fastfetch.enable = true;
           fish.enable = true;
           fzf.enable = true;
           starship.enable = true;

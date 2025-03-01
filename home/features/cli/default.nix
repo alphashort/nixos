@@ -4,6 +4,7 @@
 }:
 {
   imports = [
+    ./fastfetch.nix
     ./fish.nix
     ./fzf.nix
     ./starship.nix
@@ -12,6 +13,16 @@
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
+  };
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    withNodeJs = true;
+    withPython3 = true;
   };
 
   programs.git = {
@@ -108,7 +119,6 @@
     devenv
     entr
     fabric-ai
-    fastfetch
     fd
     gcc
     go
