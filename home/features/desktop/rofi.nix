@@ -16,7 +16,7 @@ in {
         plugins = [
           rofi-calc
           rofi-emoji
-          stable.rofi-file-browser
+          rofi-file-browser
         ];
       };
       pass = {

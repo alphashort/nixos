@@ -21,18 +21,29 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
-    systems = [
-      "aarch64-linux"
-      "i686-linux"
-      "x86_64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
-    ];
-    forAllSystems = nixpkgs.lib.genAttrs systems;
+    lib = nixpkgs.lib // home-manager.lib;
+    systems = [ "x86_64-linux" ];
+    name = "Alpha Short";
+
+    forEachSystem = f: lib.genAttrs systems (system: f pkgsFor.${system});
+    pkgsFor = lib.genAttrs systems (
+      system:
+      import nixpkgs {
+        inherit system;
+	config.allowUnfree = true;
+      }
+    );
   in {
-    packages =
-      forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    overlays = import ./overlays {inherit inputs outputs;};
+    inherit lib;
+    nixosModules = import ./modules/nixos;
+    homeManagerModules = import ./modules/home-manager;
+
+    overlays = import ./overlays { inherit inputs; };
+
+    packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs inputs; });
+    devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
+    formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
+
     nixosConfigurations = {
       venus = nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -48,7 +59,9 @@
       "alphashort@venus" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {
-          inherit inputs outputs;
+          inherit inputs outputs name;
+	  username = "alphashort";
+	  email = "robertrivarola060@gmail.com";
           hostname = "venus";
         };
         modules = [

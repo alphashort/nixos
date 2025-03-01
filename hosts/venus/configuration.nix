@@ -28,11 +28,10 @@
     options v4l2loopback exclusive_caps=1 max_buffers=2
   '';
 
-  networking.hostName = "venus"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "venus"; # Define your hostname.
+    networkmanager.enable = true;
+  };
 
   # Set your time zone.
   time.timeZone = "America/Asuncion";
@@ -53,12 +52,23 @@
   };
 
   # Configure console keymap
-  console.keyMap = "la-latin1";
+  console = {
+    keyMap = "la-latin1";
+  };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "latam";
-    variant = "";
+  services = {
+
+    fstrim.enable = true;
+
+    openssh.enable = true;
+
+    xserver = {
+
+      xkb = {
+        layout = "latam";
+        variant = "";
+      };
+    };
   };
 
   # Bluetooth
@@ -83,12 +93,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.fstrim.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

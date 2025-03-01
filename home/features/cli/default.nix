@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./fish.nix
     ./fzf.nix
@@ -12,12 +16,10 @@
 
   programs.git = {
     enable = true;
-    difftastic.enable = true;
     userName = "alphashort";
     userEmail = "robertrivarola060@gmail.com";
     aliases = {
       st = "status";
-      logd = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
     };
     extraConfig = {
       init = {
@@ -106,9 +108,11 @@
     devenv
     entr
     fabric-ai
+    fastfetch
     fd
     gcc
     go
+    htop
     httpie
     just
     lorri
