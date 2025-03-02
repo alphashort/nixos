@@ -20,6 +20,7 @@ in {
       mpv
       yt-dlp
       pamixer
+      pavucontrol
       qpwgraph
       v4l-utils
       audacious
